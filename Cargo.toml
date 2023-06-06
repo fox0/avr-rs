@@ -1,0 +1,9 @@
+[package]
+name = "avr-rs"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+# avr-objdump -d target/avr-unknown-gnu-atmega328/release/*.elf
+# https://book.avr-rust.com/004-flashing-a-crate-to-chip.html
