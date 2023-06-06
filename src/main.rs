@@ -3,7 +3,11 @@
 #![feature(lang_items)]
 #![feature(abi_avr_interrupt)]
 
-use core::ptr::{read_volatile, write_volatile};
+mod arch;
+
+use crate::arch::atmega328p::PortB;
+
+// use core::ptr::{read_volatile, write_volatile};
 
 extern "C" {
     fn __bad_interrupt();
@@ -19,27 +23,21 @@ unsafe fn panic(_info: &core::panic::PanicInfo) -> ! {
     unreachable!()
 }
 
-/// The data direction register for PORT B, which is mapped to 0x24 in memory on the atmega328.
-const DDRB: *mut u8 = 0x24 as *mut u8;
-/// The pin status register for PORT B, which is mapped to 0x25 in memory on the atmega328.
-const PORTB: *mut u8 = 0x25 as *mut u8;
-
 #[no_mangle]
-pub unsafe extern "avr-interrupt" fn __vector_3() {
-    let prev_value = read_volatile(PORTB);
-    write_volatile(PORTB, prev_value);
+pub extern "avr-interrupt" fn __vector_3() {
+    // let prev_value = read_volatile(PORTB);
+    // write_volatile(PORTB, prev_value);
 }
 
 #[no_mangle]
-pub unsafe extern fn main() -> ! {
-    // unsafe {
+pub extern "C" fn main() -> ! {
+    PortB::write_port(PortB::PB0 | PortB::PB1);
+
     // Set the upper four physical pins on PORT B to inputs, the lower four to outputs.
     // The AVR interprets '1' in the data direction register as 'output', '0' input
     // for the corresponding pin.
     // core::ptr::write_volatile(DDRB, core::ptr::read_volatile(DDRB) | 0b00001111);
 
     // Write half of the output pins as high, the other half low.
-    write_volatile(PORTB, 0b00001010);
-    // }
     loop {}
 }

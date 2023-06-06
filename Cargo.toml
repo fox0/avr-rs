@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+enumflags2 = "0.7.7"
 
 # avr-objdump -d target/avr-unknown-gnu-atmega328/release/*.elf
 # https://book.avr-rust.com/004-flashing-a-crate-to-chip.html
