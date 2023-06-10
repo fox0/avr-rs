@@ -1,8 +1,11 @@
-[build]
-target = ["avr-unknown-gnu-atmega328"]
+[alias]
+b = "build --release --target avr-unknown-gnu-atmega328 -Z build-std=core"
 
-[unstable]
-build-std = ["core"]
+#[build]
+#target = ["avr-unknown-gnu-atmega328"]
+#
+#[unstable]
+#build-std = ["core"]
 
 [profile.release]
 codegen-units = 1

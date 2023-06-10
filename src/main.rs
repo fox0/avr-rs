@@ -1,8 +1,7 @@
 #![no_std]
-#![no_main]
+#![cfg_attr(not(test), no_main)]
 #![feature(lang_items)]
 #![feature(abi_avr_interrupt)]
-// #[allow(clippy::upper_case_acronyms)]
 mod arch;
 
 use crate::arch::RegisterAddress;
@@ -29,6 +28,7 @@ pub extern "avr-interrupt" fn __vector_3() {
     // write_volatile(PORTB, prev_value);
 }
 
+#[cfg(not(test))]
 #[no_mangle]
 pub extern "C" fn main() -> ! {
     // PortB::write_port(PortB::PB0 | PortB::PB1);
